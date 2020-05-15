@@ -3,8 +3,8 @@
 	"data": {
 		"shopId": 1,
 		"shopName": "尊宝比萨（科学城店）",
-		"shopLogo": "http://192.168.0.64:8080/logo.png",
-		"shopBgImg": "http://192.168.0.64:8080/logo.png",
+		"shopLogo": "/logo.png",
+		"shopBgImg": "/logo.png",
 		"advantage": "黄埔区意面披萨回头率飙升第2名",
 		"time": "45分钟",
 		"notice": "如订餐中有品质/服务等问题可投诉：18788888888；另外哈哈哈哈哈",
@@ -16,7 +16,7 @@
 			"navName": "折扣",
 			"productDatas": [{
 					"productId": "1-1-1",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "8英寸新奥尔良烤鸡肉披萨",
 					"productIntroduce": "【美味鸡肉】当日新鲜发酵的饼底，加上新奥尔良烤鸡肉",
 					"salesVolume": "252",
@@ -27,7 +27,7 @@
 				},
 				{
 					"productId": "1-1-2",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "8英寸新奥尔良烤鸡肉披萨",
 					"productIntroduce": "【美味鸡肉】当日新鲜发酵的饼底，加上新奥尔良烤鸡肉",
 					"salesVolume": "252",
@@ -37,7 +37,7 @@
 					"unit": "约8英寸"
 				}, {
 					"productId": "1-1-3",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "8英寸新奥尔良烤鸡肉披萨",
 					"productIntroduce": "【美味鸡肉】当日新鲜发酵的饼底，加上新奥尔良烤鸡肉",
 					"salesVolume": "252",
@@ -47,7 +47,7 @@
 					"unit": "约8英寸"
 				}, {
 					"productId": "1-1-4",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "8英寸新奥尔良烤鸡肉披萨",
 					"productIntroduce": "【美味鸡肉】当日新鲜发酵的饼底，加上新奥尔良烤鸡肉",
 					"salesVolume": "252",
@@ -62,7 +62,7 @@
 			"navName": "买一送一",
 			"productDatas": [{
 					"productId": "1-2-1",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "8英寸榴莲披萨",
 					"productIntroduce": "美味猫山王榴莲",
 					"salesVolume": "100",
@@ -73,7 +73,7 @@
 				},
 				{
 					"productId": "1-2-2",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "8英寸榴莲披萨",
 					"productIntroduce": "美味猫山王榴莲",
 					"salesVolume": "100",
@@ -88,7 +88,7 @@
 			"navName": "精选套餐",
 			"productDatas": [{
 					"productId": "1-3-1",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "10英寸榴莲披萨",
 					"productIntroduce": "美味猫山王榴莲",
 					"salesVolume": "300",
@@ -99,7 +99,7 @@
 				},
 				{
 					"productId": "1-3-2",
-					"productImg": "http://192.168.0.64:8080/logo.png",
+					"productImg": "/logo.png",
 					"productTitle": "10英寸榴莲披萨",
 					"productIntroduce": "美味猫山王榴莲",
 					"salesVolume": "140",

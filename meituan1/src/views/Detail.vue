@@ -32,10 +32,10 @@
 			</van-sidebar>
 
 			<!-- 产品列表 -->
-			<div class="product-list">
-				<div v-for="p in productDatas" :key="p.navId">
-					<p :id="'navId'+p.navId" class="product-list-nav">{{p.navName}}</p>
-					<div class="product-list-item" v-for="item in p.productDatas" :key="item.productId">
+			<div class="product-list" @scroll="listTitleScroll()">
+				<div class="product-list-big-item" v-for="p in productDatas" :key="p.navId">
+					<p :id="p.navId" class="product-list-title" :ref="p.navId">{{p.navName}}</p>
+					<div class="product-list-small-item" v-for="item in p.productDatas" :key="item.productId">
 						<div class="product-img">
 							<img :src="item.productImg" alt="">
 						</div>
@@ -133,7 +133,6 @@
 			//获取店铺详情
 			that.getDetail()
 
-
 		},
 		methods: {
 			//返回上一页
@@ -155,11 +154,27 @@
 				})
 			},
 
-			//点击左边菜单
+			//点击左边菜单跳转到相应的列表项
 			clickRightNav(navId) {
-				// const that = this
-				console.log('navId' + navId)
+				document.querySelector('#' + navId).scrollIntoView({
+					behavior: "smooth"
+				})
 
+			},
+
+			//菜单列表滚动监听
+			listTitleScroll() {
+				//const that = this
+			// product-list
+			
+				
+				// for (let i = 0; i < that.$refs.length; i++) {
+				// 	if (that.$refs[i].offsetTop == 0) {
+				// 		that.activeKey = i
+				// 	}
+				// }
+
+				
 			},
 
 		},
@@ -305,14 +320,14 @@
 				flex: 4;
 				overflow: auto;
 
-				.product-list-nav {
+				.product-list-title {
 					font-size: 13px;
 					margin: 0;
 					padding: 4px 10px;
 					background: #f7f8fa;
 				}
 
-				.product-list-item {
+				.product-list-small-item {
 					padding: 10px;
 					border-bottom: 1px solid #eee;
 

@@ -5,7 +5,9 @@
 		<div class="top-part">
 			<!-- 当前位置 -->
 			<div class="top-part-1">
-				<i class="iconfont iconlocation"></i><span>光机电（广州）科技研究院有限公司</span><i class="iconfont iconright"></i>
+				<!-- 高德地图不需要显示 -->
+				<el-amap vid="amap" :plugin="plugin" class="amap-demo" :center="center"></el-amap>
+				<i class="iconfont iconlocation"></i><span>{{formattedAddress}}</span><i class="iconfont iconright"></i>
 			</div>
 			<!-- 搜索 -->
 			<div class="top-part-2">
@@ -131,8 +133,8 @@
 						<div class="other">
 							<span><i class="iconfont iconstar-fill"></i>{{item.score}}</span>
 							<span>月售{{item.salesVolume}}</span>
-							<span class="fr">{{item.distance}}</span>
-							<span class="fr">{{item.time}}</span>
+							<span>{{item.time}}</span>
+							<span>{{item.distance}}</span>
 						</div>
 						<div class="other">
 							<span>起送¥{{item.price1}}</span>
@@ -181,7 +183,33 @@
 			[List.name]: List
 		},
 		data() {
+			let self = this
 			return {
+				//当前位置
+				formattedAddress: "",
+				zoom: 12,
+				//当前经纬度
+				center: [106.354928, 29.613256],
+				plugin: [{
+					pName: 'Geolocation',
+					events: {
+						init(o) {
+							// o 是高德地图定位插件实例
+							o.getCurrentPosition((status, result) => {
+								if (result && result.position) {
+									self.lng = result.position.lng;
+									self.lat = result.position.lat;
+									self.center = [self.lng, self.lat];
+									self.loaded = true;
+									self.$nextTick();
+									//逆编码
+									self.getaddress0(self.center)
+								}
+							});
+						}
+					}
+				}],
+
 				searchFixed: false, //搜索是否固定在顶部
 				filterPartFixed: false, //筛选区是否固定在顶部
 				list: [], //商家列表
@@ -202,6 +230,17 @@
 			window.removeEventListener("scroll", this.scrollHandle)
 		},
 		methods: {
+			//逆解码函数
+			getaddress0: function(lnglat) {
+				const that = this
+				var geocoder = new AMap.Geocoder()
+				geocoder.getAddress(lnglat, function(status, result) {
+					console.log(status)
+					console.log(result)
+					that.formattedAddress = result.regeocode.formattedAddress
+				})
+			},
+
 			//页面滚动事件
 			scrollHandle: function() {
 				const that = this
@@ -255,7 +294,7 @@
 			},
 
 		}
-	}	
+	}
 </script>
 <style lang="scss" scoped>
 	.home {

@@ -7,9 +7,7 @@ import VueAMap from 'vue-amap'
 Vue.use(VueAMap)
 VueAMap.initAMapApiLoader({
 	key: '4f69a48dbd48b54b232ae32fe17fb873',
-	plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType',
-		'AMap.PolyEditor', 'AMap.CircleEditor', 'AMap.Geolocation'
-	],
+	plugin: ['AMap.Geolocation'],
 	// 默认高德 sdk 版本为 1.4.4
 	v: '1.4.4'
 });

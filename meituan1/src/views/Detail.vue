@@ -28,13 +28,13 @@
 		<div class="product" :style="'height:'+(screenHeight-265)+'px'">
 			<!-- 左侧导航 -->
 			<van-sidebar v-model="activeKey">
-				<van-sidebar-item v-for="nav in productDatas" :key="nav.navId" :title="nav.navName" @click="clickRightNav(nav.navId)" />
+				<van-sidebar-item v-for="(nav,index) in productDatas" :key="nav.navId" :title="nav.navName" @click="jump(index)" />
 			</van-sidebar>
 
 			<!-- 产品列表 -->
-			<div class="product-list" @scroll="listTitleScroll()">
+			<div class="product-list" @scroll="listScroll">
 				<div class="product-list-big-item" v-for="p in productDatas" :key="p.navId">
-					<p :id="p.navId" class="product-list-title" :ref="p.navId">{{p.navName}}</p>
+					<p class="product-list-title">{{p.navName}}</p>
 					<div class="product-list-small-item" v-for="item in p.productDatas" :key="item.productId">
 						<div class="product-img">
 							<img :src="item.productImg" alt="">
@@ -48,13 +48,13 @@
 							</div>
 							<div class="bottom-part">
 								<div class="product-price">
-									<span class="now-price">¥{{item.nowPrice}}</span>
+									<span class="now-price">¥{{item.newPrice}}</span>
 									<span class="old-price"><del>¥{{item.oldPrice}}</del>/{{item.unit}}</span>
 								</div>
 								<div class="button-group">
-									<van-button round color="#fac300">+</van-button>
-									<span class="count">1</span>
-									<van-button round color="#fac300">-</van-button>
+									<van-button round color="#fac300" @click="add(item)">+</van-button>
+									<span class="count" v-if="item.productNum>0">{{item.productNum}}</span>
+									<van-button round color="#fac300" v-if="item.productNum>0" @click="reduce(item)">-</van-button>
 								</div>
 							</div>
 						</div>
@@ -71,9 +71,11 @@
 		<div class="detail-bottom">
 			<div class="cart-part">
 				<div class="l" @click="cartShow=true">
+					<!-- 数量 -->
+					<!-- <div class="cart-num">0</div> -->
 					<img src="../assets/logo.png" alt="">
-					<div class="price">¥31.9</div>
-					<div class="small-text">另需配送费¥2<del>¥5</del></div>
+					<div class="price">¥{{total}}</div>
+					<div class="small-text">另需配送费¥{{shopDetail.newDistributionPrice}}<del>¥{{shopDetail.oldDistributionPrice}}</del></div>
 				</div>
 				<div class="r">
 					<div class="pay">去结算</div>
@@ -82,7 +84,9 @@
 			</div>
 		</div>
 		<!-- 购物车内容 -->
-		<van-popup position="bottom" v-model="cartShow">内容</van-popup>
+		<van-popup position="bottom" v-model="cartShow">
+
+		</van-popup>
 
 
 
@@ -120,6 +124,7 @@
 				activeKey: 0, //侧边栏选择
 				cartShow: false, //购物车展示
 				screenHeight: 0, // 屏幕分辨率高度
+				total: 0, //总价
 			}
 		},
 		mounted() {
@@ -155,27 +160,56 @@
 			},
 
 			//点击左边菜单跳转到相应的列表项
-			clickRightNav(navId) {
-				document.querySelector('#' + navId).scrollIntoView({
-					behavior: "smooth"
-				})
-
+			jump(index) {
+				var items = document.querySelectorAll(".product-list-big-item");
+				for (var i = 0; i < items.length; i++) {
+					if (index === i) {
+						items[i].scrollIntoView({
+							block: "start", //默认跳转到顶部
+							//behavior: "smooth" //滚动的速度
+						});
+					}
+				}
 			},
 
 			//菜单列表滚动监听
-			listTitleScroll() {
-				//const that = this
-			// product-list
-			
-				
-				// for (let i = 0; i < that.$refs.length; i++) {
-				// 	if (that.$refs[i].offsetTop == 0) {
-				// 		that.activeKey = i
-				// 	}
-				// }
+			listScroll(e) { //e
+				const that = this
+				let scrollItems = document.querySelectorAll(".product-list-big-item")
+				for (let i = scrollItems.length - 1; i >= 0; i--) {
+					//判断是否滚动到底，如果是，左侧的tab变成最后一项
+					let h = e.target.scrollHeight - e.target.clientHeight
+					if (e.target.scrollTop == h) {
+						that.activeKey = scrollItems.length - 1
+						break
+					}
+					//滚动锚点定位
+					if (e.target.scrollTop >= scrollItems[i].offsetTop) {
+						that.activeKey = i
+						break
+					}
 
-				
+				}
+
 			},
+
+			//添加
+			add(item) {
+				const that = this
+				item.productNum = item.productNum + 1
+				//获取购物车总价
+				that.total = that.total + item.newPrice
+			},
+
+			//减少
+			reduce(item) {
+				const that = this
+				item.productNum = item.productNum - 1
+				//获取购物车总价
+				that.total = that.total - item.newPrice
+
+			},
+
 
 		},
 
@@ -317,6 +351,7 @@
 			}
 
 			.product-list {
+				position: relative;
 				flex: 4;
 				overflow: auto;
 
@@ -442,6 +477,18 @@
 					box-sizing: border-box;
 					padding: 7px 0 7px 76px;
 
+					.cart-num {
+						position: absolute;
+						left: 45px;
+						top: -35px;
+						background: #f00;
+						color: #fff;
+						border-radius: 50%;
+						width: 30px;
+						height: 30px;
+						z-index: 999;
+					}
+
 					img {
 						position: absolute;
 						top: -16px;
@@ -471,6 +518,10 @@
 
 				.small-text {
 					font-size: 12px;
+
+					del {
+						margin-left: 4px;
+					}
 				}
 
 			}

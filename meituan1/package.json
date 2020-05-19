@@ -42,9 +42,9 @@
       "parser": "babel-eslint"
     },
     "rules": {},
-		"globals": {
-			 "AMap": true 
-		}
+    "globals": {
+      "AMap": true
+    }
   },
   "browserslist": [
     "> 1%",
